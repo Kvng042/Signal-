@@ -100,3 +100,12 @@ def baseline_signals(df, times=((8, 0), (13, 30), (15, 0)), rr=2.0):
         sigs.append(dict(i=i, side="BUY", entry=e, stop=e - a, tp=e + rr * a, setup="baseline"))
         sigs.append(dict(i=i, side="SELL", entry=e, stop=e + a, tp=e - rr * a, setup="baseline"))
     return sigs
+def passes(trades):
+    if trades is None or trades.empty:
+        return False
+    t = trades.sort_values("time").reset_index(drop=True)
+    cut = int(len(t) * (1 - cfg.TEST_FRACTION))
+    a, b = summarize(t.iloc[:cut]), summarize(t.iloc[cut:])
+    return (a.get("n", 0) >= cfg.MIN_TRADES and b.get("n", 0) >= cfg.MIN_TRADES
+            and a["avg_r"] > 0 and b["avg_r"] > 0)
+
