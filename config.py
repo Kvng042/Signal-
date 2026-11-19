@@ -15,3 +15,8 @@ HORIZON = env("HORIZON", 96)               # max candles a trade stays open (96 
 TEST_FRACTION = env("TEST_FRACTION", 0.3)  # newest 30% is kept for confirmation
 MIN_TRADES = env("MIN_TRADES", 20)         # minimum trades per period to call a setup proven
 DATA_DIR = os.environ.get("DATA_DIR", "data")
+RR = env("RR", 2.0)               # target distance, in multiples of the stop distance
+MIN_STOP = env("MIN_STOP", 2.0)   # smallest allowed stop, in dollars
+STRETCH = env("STRETCH", 2.0)     # VWAP snap-back: distance from VWAP, in ATRs
+BRK_TREND = env("BRK_TREND", 1)   # breakout: 1 = trade only with the 1h trend
+
